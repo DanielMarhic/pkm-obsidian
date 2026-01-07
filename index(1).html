@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PKM & Obsidian - Capitaliser l'expérience terrain</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --obsidian-purple: #7c3aed;
+            --obsidian-dark: #1e1b4b;
+            --gold: #f59e0b;
+            --emerald: #10b981;
+            --coral: #f87171;
+            --sky: #38bdf8;
+            --slate: #334155;
+            --light: #f8fafc;
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: linear-gradient(135deg, var(--obsidian-dark) 0%, #312e81 50%, #1e1b4b 100%);
+            min-height: 100vh;
+            color: var(--light);
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            padding: 60px 40px 40px;
+            position: relative;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--obsidian-purple), var(--gold));
+            border-radius: 2px;
+        }
+
+        .badge {
+            display: inline-block;
+            background: rgba(124, 58, 237, 0.2);
+            border: 1px solid var(--obsidian-purple);
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.8; }
+            50% { opacity: 1; box-shadow: 0 0 20px rgba(124, 58, 237, 0.4); }
+        }
+
+        h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #fff 0%, #c4b5fd 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-family: 'Crimson Pro', serif;
+            font-size: 1.4rem;
+            font-style: italic;
+            color: #a5b4fc;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px 60px;
+        }
+
+        /* Le Problème Section */
+        .problem-section {
+            background: rgba(248, 113, 113, 0.1);
+            border: 1px solid rgba(248, 113, 113, 0.3);
+            border-radius: 24px;
+            padding: 40px;
+            margin-bottom: 50px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .problem-section::before {
+            content: '⚠️';
+            position: absolute;
+            top: -30px;
+            right: -30px;
+            font-size: 120px;
+            opacity: 0.1;
+        }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 25px;
+        }
+
+        .section-title .icon {
+            width: 45px;
+            height: 45px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .problem-section .icon { background: rgba(248, 113, 113, 0.3); }
+
+        .problem-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .problem-card {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 16px;
+            padding: 25px;
+            border-left: 4px solid var(--coral);
+        }
+
+        .problem-card h4 {
+            color: var(--coral);
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+
+        .problem-card p {
+            color: #cbd5e1;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* Flow Section */
+        .flow-section {
+            margin: 60px 0;
+        }
+
+        .flow-title {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 40px;
+            color: var(--gold);
+        }
+
+        .flow-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .flow-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            min-width: 150px;
+        }
+
+        .flow-circle {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin-bottom: 15px;
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+
+        .flow-circle:hover {
+            transform: scale(1.1);
+        }
+
+        .flow-step:nth-child(1) .flow-circle { background: linear-gradient(135deg, #3b82f6, #1d4ed8); }
+        .flow-step:nth-child(3) .flow-circle { background: linear-gradient(135deg, var(--obsidian-purple), #5b21b6); }
+        .flow-step:nth-child(5) .flow-circle { background: linear-gradient(135deg, var(--emerald), #059669); }
+        .flow-step:nth-child(7) .flow-circle { background: linear-gradient(135deg, var(--gold), #d97706); }
+
+        .flow-step h4 {
+            font-size: 1rem;
+            margin-bottom: 5px;
+        }
+
+        .flow-step p {
+            font-size: 0.85rem;
+            color: #94a3b8;
+        }
+
+        .flow-arrow {
+            font-size: 2rem;
+            color: var(--obsidian-purple);
+            animation: bounce 1s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(5px); }
+        }
+
+        /* Benefits Grid */
+        .benefits-section {
+            margin: 60px 0;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+        }
+
+        .benefit-card {
+            background: linear-gradient(145deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 35px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .benefit-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--obsidian-purple);
+            box-shadow: 0 20px 40px rgba(124, 58, 237, 0.2);
+        }
+
+        .benefit-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+        }
+
+        .benefit-card:nth-child(1)::before { background: linear-gradient(90deg, var(--sky), #0284c7); }
+        .benefit-card:nth-child(2)::before { background: linear-gradient(90deg, var(--emerald), #059669); }
+        .benefit-card:nth-child(3)::before { background: linear-gradient(90deg, var(--gold), #d97706); }
+        .benefit-card:nth-child(4)::before { background: linear-gradient(90deg, var(--obsidian-purple), #5b21b6); }
+        .benefit-card:nth-child(5)::before { background: linear-gradient(90deg, var(--coral), #dc2626); }
+        .benefit-card:nth-child(6)::before { background: linear-gradient(90deg, #ec4899, #be185d); }
+
+        .benefit-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+        }
+
+        .benefit-card:nth-child(1) .benefit-icon { background: rgba(56, 189, 248, 0.2); }
+        .benefit-card:nth-child(2) .benefit-icon { background: rgba(16, 185, 129, 0.2); }
+        .benefit-card:nth-child(3) .benefit-icon { background: rgba(245, 158, 11, 0.2); }
+        .benefit-card:nth-child(4) .benefit-icon { background: rgba(124, 58, 237, 0.2); }
+        .benefit-card:nth-child(5) .benefit-icon { background: rgba(248, 113, 113, 0.2); }
+        .benefit-card:nth-child(6) .benefit-icon { background: rgba(236, 72, 153, 0.2); }
+
+        .benefit-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        .benefit-card p {
+            color: #94a3b8;
+            line-height: 1.7;
+            font-size: 0.95rem;
+        }
+
+        /* Comparison Section */
+        .comparison-section {
+            margin: 60px 0;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .comparison-section {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .comparison-card {
+            border-radius: 20px;
+            padding: 35px;
+        }
+
+        .comparison-card.without {
+            background: rgba(248, 113, 113, 0.1);
+            border: 1px solid rgba(248, 113, 113, 0.3);
+        }
+
+        .comparison-card.with {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        .comparison-card h3 {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.3rem;
+            margin-bottom: 25px;
+        }
+
+        .comparison-card.without h3 { color: var(--coral); }
+        .comparison-card.with h3 { color: var(--emerald); }
+
+        .comparison-list {
+            list-style: none;
+        }
+
+        .comparison-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .comparison-list li:last-child {
+            border-bottom: none;
+        }
+
+        .comparison-list li span:first-child {
+            flex-shrink: 0;
+        }
+
+        /* Quote Section */
+        .quote-section {
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.2) 0%, rgba(245, 158, 11, 0.1) 100%);
+            border-radius: 24px;
+            padding: 50px;
+            text-align: center;
+            margin: 60px 0;
+            position: relative;
+        }
+
+        .quote-section::before {
+            content: '"';
+            position: absolute;
+            top: 20px;
+            left: 40px;
+            font-size: 100px;
+            font-family: 'Crimson Pro', serif;
+            color: var(--obsidian-purple);
+            opacity: 0.3;
+            line-height: 1;
+        }
+
+        .quote-text {
+            font-family: 'Crimson Pro', serif;
+            font-size: 1.8rem;
+            font-style: italic;
+            line-height: 1.6;
+            max-width: 900px;
+            margin: 0 auto 20px;
+        }
+
+        .quote-author {
+            color: var(--gold);
+            font-weight: 600;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            text-align: center;
+            margin: 60px 0;
+            padding: 60px;
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.3) 0%, rgba(91, 33, 182, 0.2) 100%);
+            border-radius: 24px;
+            border: 1px solid var(--obsidian-purple);
+        }
+
+        .cta-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #fff 0%, var(--gold) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .cta-section p {
+            font-size: 1.2rem;
+            color: #a5b4fc;
+            max-width: 700px;
+            margin: 0 auto 30px;
+            line-height: 1.7;
+        }
+
+        .cta-stats {
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--gold);
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--light);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate {
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; }
+        .delay-4 { animation-delay: 0.4s; }
+        .delay-5 { animation-delay: 0.5s; }
+        .delay-6 { animation-delay: 0.6s; }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="badge">Formation Moniteur d'Atelier</div>
+        <h1>Construire son Coffre de Connaissances</h1>
+        <p class="subtitle">Comment le PKM avec Obsidian transforme l'expérience terrain en expertise durable</p>
+    </header>
+
+    <main class="container">
+        <!-- Problème Section -->
+        <section class="problem-section animate">
+            <div class="section-title">
+                <div class="icon">🎯</div>
+                <span>Le défi de la formation en alternance</span>
+            </div>
+            <div class="problem-grid">
+                <div class="problem-card">
+                    <h4>📝 Notes dispersées</h4>
+                    <p>Carnets, feuilles volantes, photos de tableau... Les apprentissages se perdent dans le chaos documentaire.</p>
+                </div>
+                <div class="problem-card">
+                    <h4>🔗 Manque de connexions</h4>
+                    <p>Les savoirs théoriques du centre restent déconnectés des situations vécues sur le terrain.</p>
+                </div>
+                <div class="problem-card">
+                    <h4>⏰ Temps centre sous-exploité</h4>
+                    <p>Les heures en centre sont passées à "revoir" plutôt qu'à approfondir et connecter.</p>
+                </div>
+                <div class="problem-card">
+                    <h4>🎓 Vécu non valorisé</h4>
+                    <p>Les expériences riches du terrain ne sont pas formalisées pour le chef-d'œuvre ou l'examen.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Flow Section -->
+        <section class="flow-section">
+            <h2 class="flow-title">✨ Le cycle vertueux du PKM en alternance</h2>
+            <div class="flow-container">
+                <div class="flow-step">
+                    <div class="flow-circle">🏭</div>
+                    <h4>TERRAIN</h4>
+                    <p>Capturer l'instant</p>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">
+                    <div class="flow-circle">💎</div>
+                    <h4>OBSIDIAN</h4>
+                    <p>Structurer & Lier</p>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">
+                    <div class="flow-circle">🎓</div>
+                    <h4>CENTRE</h4>
+                    <p>Approfondir & Valider</p>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">
+                    <div class="flow-circle">🏆</div>
+                    <h4>EXPERTISE</h4>
+                    <p>Maîtrise durable</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Benefits Grid -->
+        <section class="benefits-section">
+            <div class="section-title" style="justify-content: center; margin-bottom: 40px;">
+                <div class="icon" style="background: rgba(124, 58, 237, 0.3);">💡</div>
+                <span>Les 6 super-pouvoirs du PKM pour le stagiaire</span>
+            </div>
+            <div class="benefits-grid">
+                <div class="benefit-card animate delay-1">
+                    <div class="benefit-icon">🧠</div>
+                    <h3>Second Cerveau</h3>
+                    <p>Libérez votre mémoire de travail. Obsidian retient pour vous, vous pouvez vous concentrer sur la compréhension et l'action.</p>
+                </div>
+                <div class="benefit-card animate delay-2">
+                    <div class="benefit-icon">🔗</div>
+                    <h3>Pensée Connectée</h3>
+                    <p>Chaque situation terrain devient un cas d'étude relié aux théories. Les liens révèlent des patterns invisibles autrement.</p>
+                </div>
+                <div class="benefit-card animate delay-3">
+                    <div class="benefit-icon">⚡</div>
+                    <h3>Heures Centre Optimisées</h3>
+                    <p>Arrivez avec vos questions précises du terrain. Transformez chaque heure théorique en réponse concrète à vos besoins.</p>
+                </div>
+                <div class="benefit-card animate delay-4">
+                    <div class="benefit-icon">📚</div>
+                    <h3>Chef-d'œuvre Facilité</h3>
+                    <p>Votre base de connaissances devient la matière première de votre dossier. Plus de syndrome de la page blanche.</p>
+                </div>
+                <div class="benefit-card animate delay-5">
+                    <div class="benefit-icon">🎯</div>
+                    <h3>Réflexivité Professionnelle</h3>
+                    <p>Documenter ses pratiques développe le regard critique sur son travail. La marque des professionnels accomplis.</p>
+                </div>
+                <div class="benefit-card animate delay-6">
+                    <div class="benefit-icon">🚀</div>
+                    <h3>Capital Carrière</h3>
+                    <p>Votre coffre vous suit toute votre vie. Chaque poste enrichit votre expertise. Valeur qui ne fait que croître.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Comparison Section -->
+        <section class="comparison-section">
+            <div class="comparison-card without animate">
+                <h3>❌ Sans PKM structuré</h3>
+                <ul class="comparison-list">
+                    <li><span>😰</span> "J'avais noté ça quelque part..."</li>
+                    <li><span>🤷</span> Théorie et terrain restent deux mondes séparés</li>
+                    <li><span>😓</span> Refaire le même travail plusieurs fois</li>
+                    <li><span>📄</span> Chef-d'œuvre = partir de zéro</li>
+                    <li><span>🔄</span> Réapprendre ce qu'on avait déjà vu</li>
+                    <li><span>❓</span> Questions floues en centre de formation</li>
+                </ul>
+            </div>
+            <div class="comparison-card with animate">
+                <h3>✅ Avec Obsidian + PKM</h3>
+                <ul class="comparison-list">
+                    <li><span>🎯</span> Tout est accessible en 2 clics maximum</li>
+                    <li><span>🔗</span> Chaque vécu enrichit la théorie (et vice-versa)</li>
+                    <li><span>🏗️</span> Construction cumulative des savoirs</li>
+                    <li><span>📚</span> Chef-d'œuvre = synthèse de votre base</li>
+                    <li><span>📈</span> Progression visible et motivante</li>
+                    <li><span>💡</span> Questions précises = réponses précises</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Quote Section -->
+        <section class="quote-section animate">
+            <p class="quote-text">La capitalisation transforme le savoir en connaissance partageable. C'est le passage de l'expérience vécue à l'expertise transmissible.</p>
+            <p class="quote-author">— Pierre de Zutter, théoricien de la capitalisation d'expériences</p>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="cta-section animate">
+            <h2>🎓 Une compétence pour toute la carrière</h2>
+            <p>Maîtriser le PKM avec Obsidian, c'est acquérir une méta-compétence qui multiplie toutes les autres. Le moniteur d'atelier qui documente et structure ses pratiques développe une expertise unique, valorisable et transférable.</p>
+            <div class="cta-stats">
+                <div class="stat">
+                    <div class="stat-number">90%</div>
+                    <div class="stat-label">de rétention en pratiquant</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">2x</div>
+                    <div class="stat-label">plus efficace en centre</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">∞</div>
+                    <div class="stat-label">valeur dans le temps</div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-logo">
+            <span>💎</span>
+            <span>PKM & Obsidian pour la Formation Professionnelle</span>
+        </div>
+        <p>Proposition de cursus de formation à la gestion des connaissances</p>
+        <p style="margin-top: 10px; color: #94a3b8;">© 2026 - Formation Moniteur d'Atelier</p>
+    </footer>
+</body>
+</html>
